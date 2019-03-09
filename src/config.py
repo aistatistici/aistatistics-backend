@@ -32,8 +32,8 @@ config_dict = {
     'testing': Testing,
 }
 
-MEDIA_ROOT = '/opt/aistatistici/static/staticfiles'
-STATIC_ROOT = '/opt/aistatistici/static/mediafiles'
+MEDIA_ROOT = '/tmp/aistatistici/static/mediafiles'
+STATIC_ROOT = '/tmp/aistatistici/static/staticfiles'
 
 key = Config.SECRET_KEY
 
