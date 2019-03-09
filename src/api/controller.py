@@ -1,3 +1,4 @@
+from flask import request
 from flask.json import jsonify
 from flask_restplus import Namespace, Resource, fields, abort
 
@@ -15,11 +16,8 @@ class FileUpload(Resource):
     def post(self):
         args = file_upload.parse_args()
         csv_file = args['file']
-        if csv_file.mimetype == 'text/csv':
-            destination = upload_file_location(csv_file.filename)
-            csv_file.save(destination)
-        else:
-            abort(400, 'The file type needs to be a CSV')
+        destination = upload_file_location(csv_file.filename, 'data/')
+        csv_file.save(destination)
         return 'Done', 200
 
 

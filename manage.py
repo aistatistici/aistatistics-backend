@@ -1,5 +1,5 @@
-from src import app
+from src import manager
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    manager.run()
 
