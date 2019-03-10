@@ -18,6 +18,8 @@ class FileUpload(Resource):
         args = dataset_parser.parse_args()
         csv_file = args['file']
         date_fields = args.get('date_fields', []) or []
+        if not isinstance(date_fields, list):
+            date_fields = [date_fields]
         column_info = {}
 
         for d in date_fields:
