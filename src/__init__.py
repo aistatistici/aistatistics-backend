@@ -1,4 +1,9 @@
 import os
+import sys
+
+BASE_DIR = os.path.dirname(__name__)
+
+sys.path.append(os.path.join(BASE_DIR, '..'))
 
 from flask import Flask
 from flask_script import Manager

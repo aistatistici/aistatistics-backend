@@ -17,9 +17,17 @@ class FileUpload(Resource):
     def post(self):
         args = dataset_parser.parse_args()
         csv_file = args['file']
+        date_fields = args.get('date_fields', []) or []
+        column_info = {}
+
+        for d in date_fields:
+            column_info[d] = {
+                "is_date": True
+            }
+
         destination = upload_file_location(csv_file.filename, 'data/')
         csv_file.save(destination)
-        dataset = DataSet(name=args['name'], file_path=destination)
+        dataset = DataSet(name=args['name'], file_path=destination, column_info=column_info)
         db.session.add(dataset)
         db.session.commit()
 
