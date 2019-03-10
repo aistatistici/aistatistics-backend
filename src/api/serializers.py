@@ -9,6 +9,7 @@ class DatasetSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.Str(required=True)
     data = fields.Method('get_data')
+    model_path = fields.Str(required=False)
 
     def get_data(self, obj):
         column_info = obj.column_info
