@@ -9,15 +9,16 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
 
 from src.config import config_dict
-from .api import blueprint as api
 
 app = Flask(__name__)
 app.config.from_object(config_dict[os.getenv('ENVIRONEMENT', 'development')])
-app.register_blueprint(api, url_prefix='/api')
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 db = SQLAlchemy(app)
+from .api import blueprint as api
+app.register_blueprint(api, url_prefix='/api')
+
 migrate = Migrate(app, db)
 manager = Manager(app)
 mongo = PyMongo(app)

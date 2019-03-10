@@ -1,8 +1,9 @@
-from flask import request
-from flask.json import jsonify
-from flask_restplus import Namespace, Resource, fields, abort
+from flask_restplus import Namespace, Resource
 
-from .parsers import file_upload
+from src import db
+from .models import DataSet
+from .parsers import dataset_parser
+from .serializers import dataset_schema
 from .utils import upload_file_location
 
 api = Namespace('file', description="Document parser for data entires")
@@ -12,18 +13,30 @@ api = Namespace('file', description="Document parser for data entires")
 @api.doc(id="upload", description="Uploads file")
 class FileUpload(Resource):
 
-    @api.expect(file_upload)
+    @api.expect(dataset_parser)
     def post(self):
-        args = file_upload.parse_args()
+        args = dataset_parser.parse_args()
         csv_file = args['file']
         destination = upload_file_location(csv_file.filename, 'data/')
         csv_file.save(destination)
-        return 'Done', 200
+        dataset = DataSet(name=args['name'], file_path=destination)
+        db.session.add(dataset)
+        db.session.commit()
+
+        return dataset.id, 200
 
 
-@api.route('/get-data-document')
-@api.doc('get_data_document')
-class File(Resource):
+@api.route('/get-dataset/<int:id>')
+@api.param('id', 'The task identifier')
+class DataSetView(Resource):
 
-    def get(self):
-        return jsonify({'message': 'In works'})
+    @api.doc("get_dataset")
+    def get(self, id):
+        dataset = DataSet.query.get(id)
+        if dataset:
+            return dataset_schema.dump(dataset)
+
+    @api.doc("delete_dataset")
+    @api.response(204, "Dataset deleted")
+    def delete(self, id):
+        pass
