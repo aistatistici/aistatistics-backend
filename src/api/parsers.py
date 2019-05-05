@@ -6,7 +6,7 @@ dataset_parser.add_argument('file', type=FileStorage,
                             location='files',
                             required=True,
                             help='CSV file')
-dataset_parser.add_argument('name',
+dataset_parser.add_argument('title',
                             required=True,
                             help='Name of the dataset')
 dataset_parser.add_argument('date_fields',

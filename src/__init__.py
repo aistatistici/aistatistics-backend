@@ -12,7 +12,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
 
-from src.config import config_dict
+from .config import config_dict
 
 app = Flask(__name__)
 app.config.from_object(config_dict[os.getenv('ENVIRONEMENT', 'development')])
@@ -23,7 +23,9 @@ db = SQLAlchemy(app)
 
 
 from .api import blueprint as api
+from .project import blueprint as project_app
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(project_app, url_prefix='/api')
 
 migrate = Migrate(app, db)
 manager = Manager(app)
