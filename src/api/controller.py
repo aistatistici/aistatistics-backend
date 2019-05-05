@@ -38,7 +38,7 @@ class FileUpload(Resource):
 
         destination = upload_file_location(csv_file.filename, 'data/')
         csv_file.save(destination)
-        dataset = DataSet(name=args['name'], file_path=destination, column_info=column_info)
+        dataset = DataSet(name=args['title'], file_path=destination, column_info=column_info)
         db.session.add(dataset)
         db.session.commit()
 
@@ -149,7 +149,7 @@ class PredictView(Resource):
         (train_X, train_y), (test_X, test_y) = split_data(ts, get_nr_features(csv), n_in, 1, n_out_columns)
         model = load_model(dataset.model_path)
 
-        preds = predict(model, test_X, get_nr_features(csv), n_in)
+        preds = predict(model, test_X, get_nr_features(csv), n_in, with_ground_truth=False)
 
         destination = upload_file_location(dataset.name + ".h5", 'models/')
         model.save(destination)

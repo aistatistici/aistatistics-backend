@@ -36,7 +36,7 @@ class PostProjectView(Resource):
     @api.doc("Post method functionality for Project")
     def post(self):
         args = project_parser.parse_args()
-        project = Project(name=args['name'], description=args['description'], last_update=datetime.utcnow)
+        project = Project(name=args['title'], description=args['description'], last_update=datetime.utcnow)
         db.session.add(project)
         db.session.commit()
 
