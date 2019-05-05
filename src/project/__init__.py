@@ -1,8 +1,9 @@
 from flask import Blueprint
 from flask_restplus import Api
-from .controller import api as file_ns
 
-blueprint = Blueprint('project', __name__)
+blueprint = Blueprint('project', __name__ , url_prefix='/api/project')
 api = Api(blueprint)
 
-api.add_namespace(file_ns, path='/project')
+
+from .controller import api as project_namespace
+api.add_namespace(project_namespace, path='/project')

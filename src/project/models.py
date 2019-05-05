@@ -9,8 +9,8 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    last_update = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    last_update = db.Column(db.DateTime, nullable=True, default=datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, name=None, description=None, last_update=None):
         self.name = name

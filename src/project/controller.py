@@ -11,7 +11,7 @@ from .serializers import project_schema
 api = Namespace('project', description="Project View Endpoint")
 
 
-@api.route('/project/<int:id>')
+@api.route('/<int:id>')
 @api.param('id', 'The Project identifier')
 class ProjectView(Resource):
 
@@ -19,7 +19,7 @@ class ProjectView(Resource):
     def get(self, id):
         project = Project.query.get(id)
         if project:
-            return project_parser.dump(project)
+            return project_schema.dump(project)
 
     @api.doc("Delete method functionality for Project")
     def delete(self, id):
@@ -29,14 +29,14 @@ class ProjectView(Resource):
             db.session.commit()
 
 
-@api.route('/project/')
+@api.route('/create')
 class PostProjectView(Resource):
 
     @api.expect(project_parser)
     @api.doc("Post method functionality for Project")
     def post(self):
         args = project_parser.parse_args()
-        project = Project(name=args['title'], description=args['description'], last_update=datetime.utcnow)
+        project = Project(name=args['title'], description=args['description'], last_update=datetime.utcnow())
         db.session.add(project)
         db.session.commit()
 

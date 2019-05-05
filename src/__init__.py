@@ -23,9 +23,10 @@ db = SQLAlchemy(app)
 
 
 from .api import blueprint as api
-from .project import blueprint as project_app
-app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(project_app, url_prefix='/api')
+from .project import blueprint as project
+
+app.register_blueprint(api)
+app.register_blueprint(project)
 
 migrate = Migrate(app, db)
 manager = Manager(app)
