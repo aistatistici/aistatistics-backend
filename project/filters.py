@@ -1,9 +1,9 @@
-from rest_framework_filters import filters
+from rest_framework_filters import filterset
 
 from .models import Project
 
 
-class ProjectFilter(filters.FilterSet):
+class ProjectFilter(filterset.FilterSet):
 
     class Meta:
         model = Project

@@ -23,10 +23,10 @@ def upload_model_location(instance, filename):
 class DataSet(models.Model):
 
     name = models.CharField(max_length=255, null=False, blank=False)
-    file_path = models.FileField(upload_to=upload_file_location)
-    model_path = models.FileField(upload_to=upload_model_location)
-    column_info = JSONField()
-    train_info = JSONField()
+    file_path = models.FileField(upload_to=upload_file_location, null=False)
+    model_path = models.FileField(upload_to=upload_model_location, null=True)
+    column_info = JSONField(null=True)
+    train_info = JSONField(null=True)
     project = models.ForeignKey('project.Project', related_name='data_sets', on_delete=models.CASCADE)
 
     def __str__(self):
