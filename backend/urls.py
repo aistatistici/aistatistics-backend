@@ -16,6 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from rest_framework import routers
+
+import project.urls as project_routes
+
+router = routers.DefaultRouter()
+
+routes = [
+    project_routes.routes
+]
+
+for route_list in routes:
+    for r in route_list:
+        base_name = None if len(r) <= 2 else r[2]
+        router.register(r[0], r[1], base_name=base_name)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', router.urls),
 ]

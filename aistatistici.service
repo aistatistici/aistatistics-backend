@@ -1,0 +1,14 @@
+[Unit]
+Description=Aistatistici Gunicorn Deamon
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/opt/aistatistics/backend
+ExecStart=/usr/local/bin/gunicorn --bind unix:/run/django.sock --access-log-file=/var/log/gunicorn/access.log \
+                                                               --error-log-file=/var/log/gunicorn/error.log \
+                                                               backend.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

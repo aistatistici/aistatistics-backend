@@ -1,0 +1,14 @@
+from rest_framework import viewsets
+
+
+class SerializerDispachViewSet(viewsets.ModelViewSet):
+
+    serializer_action_classes = {}
+
+    def get_serializer_class(self):
+
+        try:
+            return self.serializer_action_classes[self.request.method]
+        except (KeyError, AttributeError):
+            return super().get_serializer()
+
