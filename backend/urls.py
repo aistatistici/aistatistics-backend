@@ -37,4 +37,5 @@ for route_list in routes:
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('', include('model.urls')),
 ]

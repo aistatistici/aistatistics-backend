@@ -12,6 +12,7 @@ from .models import DataSet
 class DataSetSerializer(ContextSerializer):
 
     id = serpy.Field()
+    name = serpy.Field()
     file = serpy.MethodField('get_file')
     model = serpy.MethodField('get_model')
     column_info = serpy.Field()
@@ -24,8 +25,9 @@ class DataSetSerializer(ContextSerializer):
 
     def get_model(self, dataset):
 
-        return self.context['view'].request.build_absolute_uri(
-            dataset.model_path.url) if self.context else dataset.model_path.url
+        if dataset.model_path:
+            return self.context['view'].request.build_absolute_uri(
+                dataset.model_path.url) if self.context else dataset.model_path.url
 
 
 class PostDataSetSerializer(serializers.ModelSerializer):
